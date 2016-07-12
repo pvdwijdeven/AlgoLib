@@ -4,6 +4,10 @@ DFS w/wh recursion
 
 all shortest paths
 
+pre-order
+in-order
+post=order
+
 find bridge edges:
 	-build tree out of graph
 	- postorder nodes
