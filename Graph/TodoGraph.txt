@@ -1,0 +1,15 @@
+BFS w/wh recursion
+
+DFS w/wh recursion
+
+all shortest paths
+
+find bridge edges:
+	-build tree out of graph
+	- postorder nodes
+	- compute #of descendants
+	- per node get highest and lowest (directly) reachable node
+	- bridge edge: is tree edge, and max<nodenum and min>nodenum-number of descendants
+	(see https://classroom.udacity.com/courses/cs215/lessons/48723544/concepts/487292320923)
+	
+	
