@@ -1,11 +1,12 @@
+
+#get input
 n = input()
-ar = []
-xlist = [''] * 100
-for i in xrange(n):
-    x, y = raw_input().split()
-    if i < n / 2:
-        y = '-'
-    xlist[int(x)] += ' ' + y
-for x in xlist:
-    print x.strip(),
-    
+ar = map(int,raw_input().split())
+max_number=101	# max_number of any element in ar, assuming min=0
+
+xlist = [0] * max_number
+for x in ar:
+    xlist[x]+=1
+	
+# now do stuff with xlist
+print sum(xlist)-max(xlist)

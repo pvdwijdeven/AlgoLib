@@ -1,0 +1,5 @@
+See also https://classroom.udacity.com/courses/cs215/lessons/48739297/concepts/487491120923
+retrieve top K of list size n:
+
+Selection/Insertion: use when K=logn,loglogn or 100
+sort:				 use when K=n/2,sqrt(n) or logn

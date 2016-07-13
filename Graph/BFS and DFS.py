@@ -31,9 +31,14 @@ def get_children(graph, root, parent):
 
 
 # ***** Depth first searches when path known *****
+# DFS iterative is faster than recursive
+# for recursive > 1000, try sys.setrecursionlimit
+# if tree is very deep, BFS will be faster than DFS
+# if tree is very wide, DFS will be faster than BFS
+# binary tree -> BFS is faster
 
 
-def dfs_itterative(graph, root):
+def dfs_iterative(graph, root):
     visited = []
     todo = [root]
     while todo:
@@ -55,10 +60,42 @@ def dfs_recursive(graph, start, visited=None):
     return visited
 
 
+# ***** getting list of children and list of parents using BFS *****
+
+
+def dfs_get_all_children(graph, root):
+    visited = []
+    children = {}
+    todo = [root]
+    while todo:
+        cur_node = todo.pop(0)
+        children[cur_node] = []
+        for child in graph[cur_node]:
+            if child not in visited:
+                todo = [child] + todo
+                children[cur_node].append(child)
+        visited.append(cur_node)
+    return children
+
+
+def dfs_get_all_parents(graph, root):
+    visited = []
+    parents = {}
+    todo = [root]
+    while todo:
+        cur_node = todo.pop(0)
+        for child in graph[cur_node]:
+            if child not in visited:
+                todo = [child] + todo
+                parents[child] = cur_node
+        visited.append(cur_node)
+    return parents
+
+
 # ***** Breadth first searches when path known *****
 
 
-def bfs_itterative(graph, root):
+def bfs_iterative(graph, root):
     visited = []
     todo = [root]
     while todo:
@@ -70,7 +107,41 @@ def bfs_itterative(graph, root):
     return visited
 
 
+# ***** getting list of children and list of parents using BFS *****
+
+
+def bfs_get_all_children(graph, root):
+    visited = []
+    children = {}
+    todo = [root]
+    while todo:
+        cur_node = todo.pop(0)
+        children[cur_node] = []
+        for child in graph[cur_node]:
+            if child not in visited:
+                todo.append(child)
+                children[cur_node].append(child)
+        visited.append(cur_node)
+    return children
+
+
+def bfs_get_all_parents(graph, root):
+    visited = []
+    parents = {}
+    todo = [root]
+    while todo:
+        cur_node = todo.pop(0)
+        for child in graph[cur_node]:
+            if child not in visited:
+                todo.append(child)
+                parents[child] = cur_node
+        visited.append(cur_node)
+    return parents
+
+
 # ***** test cases *****
+
+
 def create_tree(depth=10):
     tree = {}
     todo = {}
@@ -107,26 +178,29 @@ def test_searches():
               'D': {'B'},
               'E': {'B', 'F'},
               'F': {'E'}}
-    graph3 = create_tree(14)
+    graph3 = create_tree(5)
 
-    print dfs_itterative(graph1, 'a')  # ['a', 'b', 'd', 'e', 'f', 'g', 'c']
+    print dfs_iterative(graph1, 'a')  # ['a', 'b', 'd', 'e', 'f', 'g', 'c']
     print dfs_recursive(graph1, 'a')
-    print dfs_itterative(graph2, 'A')  # ['A', 'B', 'D', 'E', 'F', 'C']
+    print dfs_iterative(graph2, 'A')  # ['A', 'B', 'D', 'E', 'F', 'C']
     print dfs_recursive(graph2, 'A')
-    print bfs_itterative(graph1, 'a')  # ['a', 'c', 'b', 'd', 'e', 'g', 'f']
-    print bfs_itterative(graph2, 'A')  # ['A', 'C', 'B', 'E', 'D', 'F']
-    print "start itterative DFS graph3"
+    print bfs_iterative(graph1, 'a')  # ['a', 'c', 'b', 'd', 'e', 'g', 'f']
+    print bfs_iterative(graph2, 'A')  # ['A', 'C', 'B', 'E', 'D', 'F']
+    print "start iterative DFS graph3"
     start_time = time.time()
-    dfs_itterative(graph3, '0')
-    print "end itterative DFS graph3", time.time() - start_time  # for tree(14): 11.6600000858(s)
+    dfs_iterative(graph3, '0')
+    print "end iterative DFS graph3", time.time() - start_time  # for tree(14): 11.6600000858(s)
     print "start recursive DFS graph3"
     start_time = time.time()
     dfs_recursive(graph3, '0')
     print "end recursive DFS graph3", time.time() - start_time  # for tree(14): 10.7320001125(s)
-    print "start itterative BFS graph3"
+    print "start iterative BFS graph3"
     start_time = time.time()
-    bfs_itterative(graph3, '0')
-    print "end itterative BFS graph3", time.time() - start_time  # for tree(14): 4.50199985504(s)
+    bfs_iterative(graph3, '0')
+    print "end iterative BFS graph3", time.time() - start_time  # for tree(14): 4.50199985504(s)
+    print dfs_get_all_parents(graph1, 'a')
+    print dfs_get_all_parents(graph2, 'A')
+    print dfs_get_all_parents(graph3, '0')
 
 
 test_searches()

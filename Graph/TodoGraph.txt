@@ -1,14 +1,15 @@
-BFS w/wh recursion
+DONE BFS w/wh recursion
 
-DFS w/wh recursion
+DONE DFS w/wh recursion
 
 all shortest paths
 
 pre-order
 in-order
-post=order
 
-find bridge edges:
+DONE post=order
+
+DONE find bridge edges:
 	-build tree out of graph
 	- postorder nodes
 	- compute #of descendants
