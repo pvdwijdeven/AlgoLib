@@ -1,0 +1,4 @@
+shortest path:
+dijkstra for sparse graphs (small m, number of edges)
+Floyd-Warshall for dense graphs (big m, number of edges)
+
