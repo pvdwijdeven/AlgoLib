@@ -39,14 +39,14 @@ def get_children(graph, root, parent):
 
 
 def dfs_iterative(graph, root):
-    visited = []
+    visited = [root]
     todo = [root]
     while todo:
         cur_node = todo.pop(0)
         for child in graph[cur_node]:
             if child not in visited:
                 todo = [child] + todo
-        visited.append(cur_node)
+                visited.append(child)
     return visited
 
 
@@ -64,7 +64,7 @@ def dfs_recursive(graph, start, visited=None):
 
 
 def dfs_get_all_children(graph, root):
-    visited = []
+    visited = [root]
     children = {}
     todo = [root]
     while todo:
@@ -74,12 +74,12 @@ def dfs_get_all_children(graph, root):
             if child not in visited:
                 todo = [child] + todo
                 children[cur_node].append(child)
-        visited.append(cur_node)
+                visited.append(child)
     return children
 
 
 def dfs_get_all_parents(graph, root):
-    visited = []
+    visited = [root]
     parents = {}
     todo = [root]
     while todo:
@@ -88,7 +88,7 @@ def dfs_get_all_parents(graph, root):
             if child not in visited:
                 todo = [child] + todo
                 parents[child] = cur_node
-        visited.append(cur_node)
+                visited.append(child)
     return parents
 
 
@@ -96,14 +96,14 @@ def dfs_get_all_parents(graph, root):
 
 
 def bfs_iterative(graph, root):
-    visited = []
+    visited = [root]
     todo = [root]
     while todo:
         cur_node = todo.pop(0)
         for child in graph[cur_node]:
             if child not in visited:
                 todo.append(child)
-        visited.append(cur_node)
+                visited.append(child)
     return visited
 
 
@@ -111,7 +111,7 @@ def bfs_iterative(graph, root):
 
 
 def bfs_get_all_children(graph, root):
-    visited = []
+    visited = [root]
     children = {}
     todo = [root]
     while todo:
@@ -121,12 +121,12 @@ def bfs_get_all_children(graph, root):
             if child not in visited:
                 todo.append(child)
                 children[cur_node].append(child)
-        visited.append(cur_node)
+                visited.append(child)
     return children
 
 
 def bfs_get_all_parents(graph, root):
-    visited = []
+    visited = [root]
     parents = {}
     todo = [root]
     while todo:
@@ -135,7 +135,7 @@ def bfs_get_all_parents(graph, root):
             if child not in visited:
                 todo.append(child)
                 parents[child] = cur_node
-        visited.append(cur_node)
+                visited.append(child)
     return parents
 
 
@@ -178,14 +178,14 @@ def test_searches():
               'D': {'B'},
               'E': {'B', 'F'},
               'F': {'E'}}
-    graph3 = create_tree(5)
-
-    print dfs_iterative(graph1, 'a')  # ['a', 'b', 'd', 'e', 'f', 'g', 'c']
-    print dfs_recursive(graph1, 'a')
-    print dfs_iterative(graph2, 'A')  # ['A', 'B', 'D', 'E', 'F', 'C']
-    print dfs_recursive(graph2, 'A')
-    print bfs_iterative(graph1, 'a')  # ['a', 'c', 'b', 'd', 'e', 'g', 'f']
-    print bfs_iterative(graph2, 'A')  # ['A', 'C', 'B', 'E', 'D', 'F']
+    graph3 = create_tree(14)
+    if debug&1:
+        print dfs_iterative(graph1, 'a')  # ['a', 'b', 'd', 'e', 'f', 'g', 'c']
+        print dfs_recursive(graph1, 'a')
+        print dfs_iterative(graph2, 'A')  # ['A', 'B', 'D', 'E', 'F', 'C']
+        print dfs_recursive(graph2, 'A')
+        print bfs_iterative(graph1, 'a')  # ['a', 'c', 'b', 'd', 'e', 'g', 'f']
+        print bfs_iterative(graph2, 'A')  # ['A', 'C', 'B', 'E', 'D', 'F']
     print "start iterative DFS graph3"
     start_time = time.time()
     dfs_iterative(graph3, '0')
@@ -198,9 +198,9 @@ def test_searches():
     start_time = time.time()
     bfs_iterative(graph3, '0')
     print "end iterative BFS graph3", time.time() - start_time  # for tree(14): 4.50199985504(s)
-    print dfs_get_all_parents(graph1, 'a')
-    print dfs_get_all_parents(graph2, 'A')
-    print dfs_get_all_parents(graph3, '0')
+    # print dfs_get_all_parents(graph1, 'a')
+    # print dfs_get_all_parents(graph2, 'A')
+    # print dfs_get_all_parents(graph3, '0')
 
 
 test_searches()
