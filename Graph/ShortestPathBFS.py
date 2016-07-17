@@ -1,39 +1,53 @@
-def bfs(graph, start, end):
-    # maintain a queue of paths
-    queue = []
-    # push the first path into the queue
-    queue.append([start])
+def bfs(graph_, start_node, end_node):
+    if start_node not in graph_ or end_node not in graph_:
+        return []
+    visited = {start_node: None}
+    queue = [start_node]
     while queue:
-        # get the first path from the queue
-        path = queue.pop(0)
-        # get the last node from the path
-        node = path[-1]
-        # path found
-        if node == end:
-            return path
-        # enumerate all adjacent nodes, construct a new path and push it into the queue
-        for adjacent in graph.get(node, []):
-            new_path = list(path)
-            new_path.append(adjacent)
-            queue.append(new_path)
+        node = queue.pop(0)
+        if node == end_node:
+            path = []
+            while node is not None:
+                path.append(node)
+                node = visited[node]
+            return path[::-1]
+        for neighbour in graph_[node]:
+            if neighbour not in visited:
+                visited[neighbour] = node
+                queue.append(neighbour)
+    return []
+
+
+def make_link(graph_, node1, node2, w):
+    if node1 not in graph_:
+        graph_[node1] = {}
+    if node2 not in graph_[node1]:
+        (graph_[node1])[node2] = 0
+    (graph_[node1])[node2] += w
+    if node2 not in graph_:
+        graph_[node2] = {}
+    if node1 not in graph_[node2]:
+        (graph_[node2])[node1] = 0
+    (graph_[node2])[node1] += w
+    return graph_
+
+
+def edge_to_graph(graph_, edge_):
+    node1 = edge_[0]
+    node2 = edge_[1]
+    if node1 not in graph_:
+        graph_[node1] = []
+    if node2 not in graph_:
+        graph_[node2] = []
+    if node2 not in graph_[node1]:
+        graph_[node1].append(node2)
+    if node1 not in graph_[node2]:
+        graph_[node2].append(node1)
 
 
 ############
 #
 # Test
-
-def make_link(mygraph, node1, node2, w):
-    if node1 not in mygraph:
-        mygraph[node1] = {}
-    if node2 not in mygraph[node1]:
-        (mygraph[node1])[node2] = 0
-    (mygraph[node1])[node2] += w
-    if node2 not in mygraph:
-        mygraph[node2] = {}
-    if node1 not in mygraph[node2]:
-        (mygraph[node2])[node1] = 0
-    (mygraph[node2])[node1] += w
-    return mygraph
 
 
 def test():
@@ -48,6 +62,16 @@ def test():
     print graph
 
     dist = bfs(graph, a, g)
+    print dist
+
+    graph2 = {}
+    edges = [[1, 2], [1, 3], [2, 4], [4, 5], [3, 5]]
+    for x in edges:
+        edge_to_graph(graph2, x)
+
+    print graph2
+
+    dist = bfs(graph2, 1, 5)
     print dist
 
 
