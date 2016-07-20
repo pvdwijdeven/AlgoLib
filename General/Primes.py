@@ -14,7 +14,7 @@ def get_list_of_10000_primes():
 def get_all_primes_to_limit(limit):
     primes_ = []
     sieve_list = get_list_of_10000_primes()
-    for i in xrange(limit):
+    for i in xrange(limit+1):
         if sieve_list[i]:
             primes_.append(i)
     return primes_
