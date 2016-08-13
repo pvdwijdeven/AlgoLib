@@ -60,7 +60,7 @@ def dfs_recursive(graph, start, visited=None):
     return visited
 
 
-# ***** getting list of children and list of parents using BFS *****
+# ***** getting list of children and list of parents using DFS *****
 
 
 def dfs_get_all_children(graph, root):
